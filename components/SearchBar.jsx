@@ -1,12 +1,18 @@
-import React from 'react'
+import React from "react";
 
-const SearchBar = ({setQuery}) => {
+const SearchBar = ({ setQuery }) => {
   return (
-     <div className="search-container">
-        <i className="fa-solid fa-magnifying-glass"></i>
-         <input type="text" placeholder="Search for a Country..." onChange={(e)=>{ setQuery(e.target.value.toLowerCase())}}/>
+    <div className="search-container">
+      <i className="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="Search for a Country..."
+        onChange={(e) => {
+          setQuery(e.target.value.toLowerCase());
+        }}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default SearchBar
+export default SearchBar;

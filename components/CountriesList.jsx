@@ -1,8 +1,10 @@
-import countryData from "../countryData";
+// import countryData from "../countryData";
 import CountryCard from "./CountryCard";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const CountriesList = ({query}) => {
+  const [countryData,setcountryData]=useState([])
+  const [count, setCount]=useState(0)
   // const [query, setQuery] = useState('');
   // console.log(countryData);
   // const array=[
@@ -24,9 +26,26 @@ const CountriesList = ({query}) => {
   //   country.name.common.toLowerCase().includes("")
   // );
   // console.log(filteredCountries);
-
+  // if(countryData.length===0)
+  // {
+    
+  // }
+  useEffect(()=>{
+    console.log("API Fetch");
+    fetch("https://restcountries.com/v3.1/all?fields=name,capital,region,subregion,languages,currencies,population,flags,timezones,area")
+    .then(res=>res.json())
+    .then((data)=>{
+        setcountryData(data)
+    })
+   
+  },[])
+  //  useEffect(()=>{
+  //   console.log("Hi");
+  // },[count])
   return (
     <>
+      {/* <h1>{count}</h1>
+      <button onClick={()=>setCount(count+1)}>Increment Counter</button> */}
       {/* <input type="text" /> */}
       <div className="country-container">
         {countryData
