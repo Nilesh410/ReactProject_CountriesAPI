@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import './CountryDetail.css'
+import { useParams } from "react-router";
 
 const CountryDetail = () => {
-  const countryName = new URLSearchParams(window.location.search).get("name");
-  const [countryData,setCountryData]=useState({})
-  console.log(countryName);
+  // const countryName = new URLSearchParams(window.location.search).get("name");
+  const params=useParams()
+  console.log(params.country)
+  const countryName=params.country
+
+  const [countryData,setCountryData]=useState(null)
+  // console.log(countryName);
+  
   useEffect(() => {
     fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
       .then((res) => res.json())
@@ -26,8 +32,11 @@ const CountryDetail = () => {
       });
   },[]);
   return (
-    <main>
-      <span className="back-button">
+    countryData===null ? 'loading....':(
+      <main>
+      <span className="back-button" onClick={()=>{
+        history.back()
+      }}>
         <i className="fa-solid fa-arrow-left"></i>&nbsp;Back
       </span>
       <div className="country-details">
@@ -74,6 +83,8 @@ const CountryDetail = () => {
         </div>
       </div>
     </main>
+    )
+    
   );
 };
 

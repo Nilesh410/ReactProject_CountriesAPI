@@ -1,16 +1,17 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 const CountryCard = ({name,flag,population,region,capital}) => {
     // console.log(name);
   return (
-    <a className="country-card" href={`/country?name=${name}`}><img src={flag} alt="flag" />
+    <Link className="country-card" to={`${name}`}><img src={flag} alt="flag" />
         <div className="country-text">
             <h3 className="capital">{name}</h3>
             <p><b>Population:</b>{population}</p>
             <p><b>Region:</b>{region}</p>
             <p><b>Capital:</b>{capital}</p>
         </div>
-    </a>
+    </Link>
   )
 }
 
