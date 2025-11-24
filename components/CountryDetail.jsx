@@ -10,10 +10,9 @@ const CountryDetail = () => {
 
   const [countryData,setCountryData]=useState(null)
   const [notFound,setNotFound]=useState(false)
+  
   console.log(countryData?.borders)
 
-  // console.log(countryName);
-  
   useEffect(() => {
     fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
       .then((res) => res.json())
@@ -32,17 +31,16 @@ const CountryDetail = () => {
           flag:data.flags.svg,
           borders:[]
         })
-       
-        console.log(data.borders)
-        data.borders.map((border)=>{
-          fetch(`https://restcountries.com/v3.1/alpha/${border}`)
+        if(!data.borders)
+        {
+          data.borders=[]
+        }
+        Promise.all(data.borders.map((border)=>{
+          return fetch(`https://restcountries.com/v3.1/alpha/${border}`)
               .then(res=>res.json())
-              .then (([borderCountry])=>{
-                // console.log(borderCountry.name.common)
-                setCountryData((prevState)=>({...prevState,borders:[...prevState.borders,borderCountry.name.common]}))
-              })
-
-        })
+              .then (([borderCountry])=>borderCountry.name.common)
+        })).then((borders)=>{setCountryData((prevState)=>({...prevState,borders}))
+      })
       }).catch((err)=>{setNotFound(true)})
   },[countryName])
   if(notFound)
