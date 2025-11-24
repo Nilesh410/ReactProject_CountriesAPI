@@ -9,6 +9,8 @@ const CountryDetail = () => {
   const countryName=params.country
 
   const [countryData,setCountryData]=useState(null)
+  const [notFound,setNotFound]=useState(false)
+
   // console.log(countryName);
   
   useEffect(() => {
@@ -29,8 +31,12 @@ const CountryDetail = () => {
           flag:data.flags.svg
         })
        
-      });
-  },[]);
+      }).catch((err)=>{setNotFound(true)})
+  },[])
+  if(notFound)
+  {
+    return <div>Country Not Found </div>
+  }
   return (
     countryData===null ? 'loading....':(
       <main>
