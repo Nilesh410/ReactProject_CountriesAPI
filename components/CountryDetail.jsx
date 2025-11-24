@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './CountryDetail.css'
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 
 const CountryDetail = () => {
   // const countryName = new URLSearchParams(window.location.search).get("name");
@@ -10,6 +10,7 @@ const CountryDetail = () => {
 
   const [countryData,setCountryData]=useState(null)
   const [notFound,setNotFound]=useState(false)
+  console.log(countryData?.borders)
 
   // console.log(countryName);
   
@@ -17,7 +18,7 @@ const CountryDetail = () => {
     fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
       .then((res) => res.json())
       .then(([data]) => {
-        console.log(data);
+        
         setCountryData({
           name:data.name.common,
           nativeName:Object.values(data.name.nativeName)[0].common,
@@ -28,11 +29,22 @@ const CountryDetail = () => {
           tld:data.tld[0],
           currencies:Object.values(data.currencies).map((currency)=>currency.name).join(', '),
           languages:Object.values(data.languages).join(', '),
-          flag:data.flags.svg
+          flag:data.flags.svg,
+          borders:[]
         })
        
+        console.log(data.borders)
+        data.borders.map((border)=>{
+          fetch(`https://restcountries.com/v3.1/alpha/${border}`)
+              .then(res=>res.json())
+              .then (([borderCountry])=>{
+                // console.log(borderCountry.name.common)
+                setCountryData((prevState)=>({...prevState,borders:[...prevState.borders,borderCountry.name.common]}))
+              })
+
+        })
       }).catch((err)=>{setNotFound(true)})
-  },[])
+  },[countryName])
   if(notFound)
   {
     return <div>Country Not Found </div>
@@ -83,9 +95,11 @@ const CountryDetail = () => {
               <span className="country-languages"></span>
             </p>
           </div>
-          <div className="border-countries">
-            <b>Border Countries:</b>
-          </div>
+          {countryData.borders.length!==0 && <div className="border-countries">
+            <b>Border Countries:</b> &nbsp;
+            {countryData.borders.map((border)=><Link key={border} to={`/${border}`}>{border}</Link>)}
+          </div>}
+          
         </div>
       </div>
     </main>
