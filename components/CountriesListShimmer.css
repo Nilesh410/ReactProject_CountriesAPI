@@ -1,0 +1,22 @@
+.shimmer-container {
+    max-width: 1200px;
+    margin-inline:auto;
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap:64px;
+    justify-content: space-between;
+}
+.shimmer-card{
+    height: 350px;
+    width:250px;
+    background-color: #ddd;
+    padding: 20px;
+    /* display:inline-block;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.2);
+    padding-bottom: 24px;
+    transition: transform 0.2s ease-in-out;  */
+
+}

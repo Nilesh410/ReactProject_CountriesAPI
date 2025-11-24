@@ -1,6 +1,8 @@
 // import countryData from "../countryData";
-import CountryCard from "./CountryCard";
 import React, { useEffect, useState } from "react";
+import CountryCard from "./CountryCard";
+import CountriesListShimmer from "./CountriesListShimmer";
+
 
 const CountriesList = ({query}) => {
   const [countryData,setcountryData]=useState([])
@@ -42,12 +44,15 @@ const CountriesList = ({query}) => {
   //  useEffect(()=>{
   //   console.log("Hi");
   // },[count])
+  if (!countryData.length) {
+    return <CountriesListShimmer />
+  }
   return (
     <>
       {/* <h1>{count}</h1>
       <button onClick={()=>setCount(count+1)}>Increment Counter</button> */}
       {/* <input type="text" /> */}
-      <div className="country-container">
+        <div className="country-container">
         {countryData
           .filter((country) => country.name.common.toLowerCase().includes(query))
           .map((country) => {
