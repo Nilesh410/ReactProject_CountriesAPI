@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
 import './CountryDetail.css'
-import { Link, useParams } from "react-router";
+import { Link, useLocation, useParams } from "react-router";
 
 const CountryDetail = () => {
   // const countryName = new URLSearchParams(window.location.search).get("name");
   const params=useParams()
   console.log(params.country)
+  const {state}=useLocation()
   const countryName=params.country
-
   const [countryData,setCountryData]=useState(null)
   const [notFound,setNotFound]=useState(false)
   
-  console.log(countryData?.borders)
-
-  useEffect(() => {
-    fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
-      .then((res) => res.json())
-      .then(([data]) => {
-        
-        setCountryData({
+  // console.log(countryData?.borders)
+  //console.log(countryName)
+  console.log(state.name.common)
+  function updateCountryData(data)
+  {
+      setCountryData({
           name:data.name.common,
           nativeName:Object.values(data.name.nativeName)[0].common,
           population:data.population.toLocaleString('en-IN'),
@@ -39,8 +37,21 @@ const CountryDetail = () => {
           return fetch(`https://restcountries.com/v3.1/alpha/${border}`)
               .then(res=>res.json())
               .then (([borderCountry])=>borderCountry.name.common)
-        })).then((borders)=>{setCountryData((prevState)=>({...prevState,borders}))
+        })).then((borders)=>{
+          setTimeout(()=>setCountryData((prevState)=>({...prevState,borders})))
       })
+   }
+  
+  useEffect(() => {
+    if(state)
+    {
+        updateCountryData(state)
+        return
+    }
+    fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
+      .then((res) => res.json())
+      .then(([data]) => {
+        updateCountryData(data)
       }).catch((err)=>{setNotFound(true)})
   },[countryName])
   if(notFound)

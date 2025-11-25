@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Header = () => {
+  const [isDark, setIsDark]= useState(JSON.parse(localStorage.getItem('isDarkMode')))
+ if(isDark)
+ {
+    document.body.classList.add('dark')
+ }
+ else
+ {
+   document.body.classList.remove('dark')
+ }
   return (
     <header className="header-container">
         <div className="header-content">
             <h2 className="title"><a href="/">where in the world?</a></h2>
-            <p className="theme-changer"><i className="fa-regular fa-moon"></i>&nbsp;&nbsp;Dark Mode</p>
+            <p className="theme-changer" onClick={()=>{
+              document.body.classList.toggle('dark')
+              setIsDark(!isDark)
+              localStorage.setItem('isDarkMode',!isDark)
+
+            }}><i className={`fa-regular fa-${isDark?'sun':'moon'}`}></i>&nbsp;&nbsp;{isDark?'Light':'Dark'} Mode</p>
         </div>
     </header>
   )
