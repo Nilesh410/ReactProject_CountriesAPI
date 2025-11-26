@@ -5,15 +5,16 @@ import SelectMenu from './components/SelectMenu'
 import CountriesList from './components/CountriesList'
 import { Outlet } from 'react-router'
 import './App.css'
+import { ThemeContext, ThemeProvider } from './contexts/ThemeContext'
 
 const App = () => {
-  const [isDark, setIsDark]= useState(JSON.parse(localStorage.getItem('isDarkMode')))
+  
+  const [isDark,setIsDark]=useState(JSON.parse(localStorage.getItem('isDarkMode')))
   return (
-    <>
-        <Header theme={[isDark, setIsDark]}/>
-        <Outlet context={[isDark, setIsDark]}/>
-       
-    </>
+    <ThemeContext.Provider value={[isDark,setIsDark]}>
+        <Header />
+        <Outlet />
+    </ThemeContext.Provider>
   )
 }
 
