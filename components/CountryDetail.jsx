@@ -18,19 +18,22 @@ const CountryDetail = () => {
  
   // console.log(countryData?.borders)
   //console.log(countryName)
-  console.log(state.name.common)
+  //console.log(state.name.common)
   function updateCountryData(data)
   {
       setCountryData({
           name:data.name.common,
-          nativeName:Object.values(data.name.nativeName)[0].common,
+          // nativeName:Object.values(data.name.nativeName)[0].common,
+           nativeName: data.name.nativeName
+                ? Object.values(data.name.nativeName)[0].common
+                  : data.name.common,
           population:data.population.toLocaleString('en-IN'),
           region:data.region,
-          subRegion:data.subregion,
-          capital:data.capital[0],
-          tld:data.tld[0],
-          currencies:Object.values(data.currencies).map((currency)=>currency.name).join(', '),
-          languages:Object.values(data.languages).join(', '),
+          subRegion:data.subregion ?? "N/A",
+          capital:data.capital? data.capital[0]:"N/A",
+          tld:data.tld? data.tld[0]:"N/A",
+          currencies:data.currencies? Object.values(data.currencies).map((currency)=>currency.name).join(', '):"N/A",
+          languages:data.languages?Object.values(data.languages).join(', '):"N/A",
           flag:data.flags.svg,
           borders:[]
         })
@@ -48,7 +51,7 @@ const CountryDetail = () => {
    }
   
   useEffect(() => {
-    if(state)
+    if(state && state.name && state.name.common)
     {
         updateCountryData(state)
         return

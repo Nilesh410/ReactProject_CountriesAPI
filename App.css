@@ -43,7 +43,7 @@ main.dark,header.dark{
 }
 main{
     padding: 24px;
-    min-height: cal(100vh-47.88vh);
+    min-height: cal(100vh-73vh);
 }
 
 .search-filter-container{
