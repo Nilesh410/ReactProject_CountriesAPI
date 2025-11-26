@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './CountryDetail.css'
 import { Link, useLocation, useParams } from "react-router";
+import { useOutletContext } from "react-router";
 
 const CountryDetail = () => {
   // const countryName = new URLSearchParams(window.location.search).get("name");
@@ -10,7 +11,7 @@ const CountryDetail = () => {
   const countryName=params.country
   const [countryData,setCountryData]=useState(null)
   const [notFound,setNotFound]=useState(false)
-  
+  const [isDark]=useOutletContext()
   // console.log(countryData?.borders)
   //console.log(countryName)
   console.log(state.name.common)
@@ -60,7 +61,7 @@ const CountryDetail = () => {
   }
   return (
     countryData===null ? 'loading....':(
-      <main>
+      <main className={`${isDark?'dark':''}`}>
       <span className="back-button" onClick={()=>{
         history.back()
       }}>

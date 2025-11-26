@@ -7,11 +7,11 @@ import { Outlet } from 'react-router'
 import './App.css'
 
 const App = () => {
-  
+  const [isDark, setIsDark]= useState(JSON.parse(localStorage.getItem('isDarkMode')))
   return (
     <>
-        <Header/>
-        <Outlet />
+        <Header theme={[isDark, setIsDark]}/>
+        <Outlet context={[isDark, setIsDark]}/>
        
     </>
   )
