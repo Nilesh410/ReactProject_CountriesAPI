@@ -54,7 +54,7 @@ const CountriesList = ({query}) => {
       {/* <input type="text" /> */}
         <div className="country-container">
         {countryData
-          .filter((country) => country.name.common.toLowerCase().includes(query))
+          .filter((country) => country.name.common.toLowerCase().includes(query)||country.region.toLowerCase().includes(query))
           .map((country) => {
             // console.log(country);
             return (

@@ -1,8 +1,9 @@
 import React from 'react'
 
-const SelectMenu = () => {
+const SelectMenu = ({setQuery}) => {
+  
   return (
-    <select  className="filter-by-region">
+    <select  className="filter-by-region" onChange={(e)=>setQuery(e.target.value.toLowerCase())}>
         <option hidden>Filter By Region</option>
         <option value="Africa">Africa</option>
         <option value="America">America</option>
