@@ -86,8 +86,6 @@ main{
     color: var(--text-color);
 
 }
-
-
 .country-container{
     max-width: 1200px;
     margin-inline:auto;
