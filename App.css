@@ -92,10 +92,11 @@ main{
     max-width: 1200px;
     margin-inline:auto;
     margin-top: 16px;
-    display: flex;
-    flex-wrap: wrap;
-    gap:64px;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    /* flex-wrap: wrap; */
+    gap:32px;
+    /* justify-content: space-between; */
        
 }
 
